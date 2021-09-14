@@ -18,7 +18,7 @@ class Structure2BodyContainer:
         _structure_list : list(pymatgen strucutres)
             structures to add to container
         _cutoff_radius : float
-            distance it will look for nearest neighbors
+            cutoff distance it will look for nearest neighbors
         """
 
         self._cutoff_radius = cutoff_radius
