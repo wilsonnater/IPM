@@ -128,7 +128,8 @@ class Structure2BodyContainer:
 
             allneighinfo.append({'Site':site,'relativepos':np.array(relativeposlist),
                                  'radius':np.array(rlist),'dradius':np.array(drlist),
-                                 'neighborSiteNumber':np.array(indexlist),'NeighborAtomType':np.array(atomtypelist)})
+                                 'neighborSiteNumber':np.array(indexlist),'NeighborAtomType':np.array(atomtypelist),
+                                 'volume':structure.volume})
         return allneighinfo
         
 

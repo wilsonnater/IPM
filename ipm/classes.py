@@ -1,3 +1,5 @@
+import numpy as np
+
 class Structure2BodyContainer:
     """
     This class serves as a container for structures and the
@@ -336,12 +338,12 @@ class Cosine_cutoff:
         dfeature=[]
         sfeatures=[]
         for site in Structure_NeighborInfo:
-            feature.append(np.array([np.cos(site['radius']*np.pi*self._cutoffradius/2)]).T)
+            feature.append((np.array([np.cos(site['radius']*np.pi/(2*self._cutoffradius))])*(site['radius']<self._cutoffradius)).T)
 
-            tempdfeat = site['dradius']*np.pi*self._cutoffradius*(-np.sin((site['radius'].reshape(-1,1))*np.pi*self._cutoffradius/2))/2
+            tempdfeat = ((site['radius']<self._cutoffradius).reshape(-1,1))*site['dradius']*np.pi*(-np.sin(((site['radius']).reshape(-1,1))*np.pi/(2*self._cutoffradius)))/(2*self._cutoffradius)
 
             #tempdfeat.sum(1).T for right feature style
-            dfeature.append(tempdfeat.T[...,np.newaxis])
+            dfeature.append(tempdfeat)
             #.sum(1) for six stress features, xx,yy,zz,xy,yz,zx order (first is force direction, second is displacement direciton)
             sfeatures.append(np.vstack([(tempdfeat*-site['relativepos']).T,
                                         (tempdfeat*-np.roll(site['relativepos'], 1,1)).T])[...,np.newaxis])
