@@ -53,7 +53,7 @@ class LJpotetnial:
                 if Return_Stress:
                     tempStressfeat+=self._all_sfeatures[structure_number][site].sum(1)
                     
-            EnergyFeatures.append(np.array(tempENEfeat))
+            EnergyFeatures.append(0.5*np.array(tempENEfeat))
             ForceFeatures.append(np.array(tempForcefeat))
             StressFeatures.append(np.array(tempStressfeat))
 
@@ -68,10 +68,6 @@ class LJpotetnial:
 
 
         return AllFeatures
-
-
-        
-
 
         
     def StructureProcesseror(self,StructureContainer=None):
@@ -92,7 +88,7 @@ class LJpotetnial:
         for site in Structure_NeighborInfo:
             feature.append(np.array([site['radius']**(-12),-site['radius']**(-6)]).T)
 
-            tempdfeat = np.array([-12*site['dradius']*((site['radius'].reshape(-1,1))**(-13)),
+            tempdfeat = (-1)*np.array([-12*site['dradius']*((site['radius'].reshape(-1,1))**(-13)),
                            6*site['dradius']*((site['radius'].reshape(-1,1))**(-7))])
 
             #tempdfeat.sum(1).T for right feature style
@@ -101,4 +97,4 @@ class LJpotetnial:
             sfeatures.append(np.vstack([(tempdfeat*-site['relativepos']).T,
                                         (tempdfeat*-np.roll(site['relativepos'], 1,1)).T]))
             
-            return feature,dfeature,sfeatures
+        return feature,dfeature,sfeatures

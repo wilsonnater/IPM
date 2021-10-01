@@ -113,12 +113,13 @@ class Structure2BodyContainer:
             drlist=[]
             indexlist=[]
             atomtypelist=[]
+            #dr/dx,dr/dy, and dr/dz are with respect to moving the site(not i)
             for i in neigh:
                 relativepos=i.coords-site_cords
                 r = np.linalg.norm(relativepos)
-                drdx = relativepos[0]/r
-                drdy = relativepos[1]/r
-                drdz = relativepos[2]/r
+                drdx = -relativepos[0]/r
+                drdy = -relativepos[1]/r
+                drdz = -relativepos[2]/r
 
                 relativeposlist.append(relativepos)
                 rlist.append(r)
